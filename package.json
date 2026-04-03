@@ -1,0 +1,50 @@
+{
+  "name": "contract-testing-pact",
+  "version": "1.0.0",
+  "description": "Consumer-driven contract testing framework using Pact.io for microservices",
+  "author": "Quvantic <info@quvantic.com> (https://quvantic.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mustafaautomation/contract-testing-pact.git"
+  },
+  "homepage": "https://github.com/mustafaautomation/contract-testing-pact#readme",
+  "bugs": {
+    "url": "https://github.com/mustafaautomation/contract-testing-pact/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start:provider": "ts-node src/provider/server.ts",
+    "test": "vitest run",
+    "test:consumer": "vitest run tests/consumer",
+    "test:provider": "vitest run tests/provider",
+    "test:watch": "vitest",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "format:check": "prettier --check \"**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "pact:publish": "ts-node scripts/publish-pacts.ts",
+    "broker:up": "docker compose up -d",
+    "broker:down": "docker compose down"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact": "^13.2.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

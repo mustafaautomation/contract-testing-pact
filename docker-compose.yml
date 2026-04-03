@@ -1,0 +1,13 @@
+services:
+  pact-broker:
+    image: pactfoundation/pact-broker:latest
+    ports:
+      - "9292:9292"
+    environment:
+      PACT_BROKER_DATABASE_URL: "sqlite:////tmp/pact_broker.sqlite3"
+      PACT_BROKER_BASE_URL: "http://localhost:9292"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9292"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
