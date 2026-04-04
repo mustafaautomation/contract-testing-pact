@@ -157,9 +157,7 @@ describe('User Service Consumer Pact', () => {
         })
         .executeTest(async (mockServer) => {
           const client = new UserApiClient(mockServer.url);
-          await expect(
-            client.createUser({ name: 'Incomplete' } as never),
-          ).rejects.toThrow();
+          await expect(client.createUser({ name: 'Incomplete' } as never)).rejects.toThrow();
         });
     });
   });

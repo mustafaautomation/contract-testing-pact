@@ -28,9 +28,7 @@ describe('User Service Provider Verification', () => {
   it('validates the expectations of the OrderService consumer', async () => {
     const verifier = new Verifier({
       providerBaseUrl: `http://localhost:${port}`,
-      pactUrls: [
-        path.resolve(process.cwd(), 'pacts', 'OrderService-UserService.json'),
-      ],
+      pactUrls: [path.resolve(process.cwd(), 'pacts', 'OrderService-UserService.json')],
       stateHandlers: {
         'users exist': async () => {
           // Default seed data is already loaded
