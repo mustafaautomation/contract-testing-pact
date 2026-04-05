@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc",
     "start:provider": "ts-node src/provider/server.ts",
-    "test": "vitest run",
+    "test": "vitest run tests/consumer && vitest run tests/provider",
     "test:consumer": "vitest run tests/consumer",
     "test:provider": "vitest run tests/provider",
     "test:watch": "vitest",
