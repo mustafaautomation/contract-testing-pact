@@ -23,7 +23,8 @@ afterAll(() => {
 describe('Provider API — GET /api/users', () => {
   it('should return paginated user list', async () => {
     const res = await fetch(`${baseUrl}/api/users?page=1&limit=10`);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(res.status).toBe(200);
     expect(data.data).toBeInstanceOf(Array);
     expect(data.data.length).toBeGreaterThan(0);
@@ -34,13 +35,15 @@ describe('Provider API — GET /api/users', () => {
 
   it('should respect limit parameter', async () => {
     const res = await fetch(`${baseUrl}/api/users?limit=1`);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(data.data).toHaveLength(1);
   });
 
   it('should have correct user structure', async () => {
     const res = await fetch(`${baseUrl}/api/users`);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     const user = data.data[0];
     expect(user.id).toBeDefined();
     expect(user.name).toBeTruthy();
@@ -53,7 +56,8 @@ describe('Provider API — GET /api/users', () => {
 describe('Provider API — GET /api/users/:id', () => {
   it('should return user by ID', async () => {
     const res = await fetch(`${baseUrl}/api/users/1`);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(res.status).toBe(200);
     expect(data.id).toBe(1);
     expect(data.name).toBeTruthy();
@@ -61,7 +65,8 @@ describe('Provider API — GET /api/users/:id', () => {
 
   it('should return 404 for non-existent user', async () => {
     const res = await fetch(`${baseUrl}/api/users/9999`);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(res.status).toBe(404);
     expect(data.error).toContain('not found');
   });
@@ -74,7 +79,8 @@ describe('Provider API — POST /api/users', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: 'Test User', email: 'test@example.com', role: 'user' }),
     });
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(res.status).toBe(201);
     expect(data.id).toBeGreaterThan(0);
     expect(data.name).toBe('Test User');
@@ -88,7 +94,8 @@ describe('Provider API — POST /api/users', () => {
       body: JSON.stringify({ name: 'Incomplete' }),
     });
     expect(res.status).toBe(400);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(data.error).toContain('required');
   });
 
@@ -99,7 +106,8 @@ describe('Provider API — POST /api/users', () => {
       body: JSON.stringify({ name: 'Bad', email: 'bad@test.com', role: 'superadmin' }),
     });
     expect(res.status).toBe(400);
-    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = (await res.json()) as any;
     expect(data.error).toContain('role');
   });
 });

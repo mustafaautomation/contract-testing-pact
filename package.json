@@ -8,10 +8,20 @@
     "type": "git",
     "url": "https://github.com/mustafaautomation/contract-testing-pact.git"
   },
-  "homepage": "https://github.com/mustafaautomation/contract-testing-pact#readme",
+  "homepage": "https://quvantic.com",
   "bugs": {
     "url": "https://github.com/mustafaautomation/contract-testing-pact/issues"
   },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js",
+      "require": "./dist/src/index.js"
+    }
+  },
+  "files": ["dist", "package.json"],
   "scripts": {
     "build": "tsc",
     "start:provider": "ts-node src/provider/server.ts",
@@ -24,6 +34,7 @@
     "format": "prettier --write \"**/*.ts\"",
     "format:check": "prettier --check \"**/*.ts\"",
     "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build",
     "pact:publish": "ts-node scripts/publish-pacts.ts",
     "broker:up": "docker compose up -d",
     "broker:down": "docker compose down"
