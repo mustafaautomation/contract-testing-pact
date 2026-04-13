@@ -25,7 +25,7 @@ function mockResponse(status: number, body: unknown): Response {
     body: null,
     bodyUsed: false,
     arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
-    blob: () => Promise.resolve(new Blob()),
+    blob: () => Promise.resolve(new Blob([])),
     formData: () => Promise.resolve(new FormData()),
     text: () => Promise.resolve(''),
     bytes: () => Promise.resolve(new Uint8Array()),
