@@ -46,7 +46,10 @@ Consumer-driven contract testing framework for microservices using [Pact.io](htt
 ```bash
 git clone https://github.com/mustafaautomation/contract-testing-pact.git
 cd contract-testing-pact
-npm install
+npm install          # Node.js 22.12+ (CI runs 22 and 24)
+
+# Run unit tests (API client and provider routes)
+npm run test:unit
 
 # Run consumer tests (generates pact file)
 npm run test:consumer
@@ -82,10 +85,13 @@ Provider tests replay the pact file against the real provider API, verifying eve
 
 ```
 tests/provider/
-└── user-service.provider.test.ts    # Verifies all consumer expectations
+├── user-service.provider.test.ts       # Verifies all consumer expectations
+└── breaking-change.provider.test.ts    # Same pact must fail against a broken provider
 ```
 
 State handlers set up the required data for each provider state.
+
+The breaking-change test starts a copy of the provider that renames `email` to `emailAddress` in its responses and asserts that verification is rejected. It shows the contract actually catches a breaking change instead of passing whatever the provider returns.
 
 ---
 
@@ -126,8 +132,8 @@ npm run broker:down
 
 The GitHub Actions workflow runs in two stages:
 
-1. **Consumer** — lint, format, typecheck, then generate pact file
-2. **Provider** — downloads the pact artifact, verifies against real provider
+1. **Consumer** (Node 22 and 24) — lint, format, typecheck, unit tests, then generate the pact file
+2. **Provider** — downloads the pact artifact, verifies it against the real provider, and checks that a broken provider is rejected
 
 Pact files are shared between jobs via GitHub Actions artifacts.
 
@@ -146,10 +152,12 @@ contract-testing-pact/
 │       ├── routes/users.ts          # REST endpoints
 │       └── data/users.ts            # In-memory data store
 ├── tests/
+│   ├── unit/                        # API client + provider route unit tests
 │   ├── consumer/
 │   │   └── user-service.consumer.test.ts   # Consumer pact tests
 │   └── provider/
-│       └── user-service.provider.test.ts   # Provider verification
+│       ├── user-service.provider.test.ts   # Provider verification
+│       └── breaking-change.provider.test.ts # Negative verification
 ├── pacts/                           # Generated pact files (gitignored)
 ├── scripts/
 │   └── publish-pacts.ts             # Pact Broker publish script
@@ -165,7 +173,8 @@ contract-testing-pact/
 
 | Command | Description |
 |---|---|
-| `npm test` | Run all tests |
+| `npm test` | Run unit, consumer and provider tests |
+| `npm run test:unit` | Unit tests for the API client and provider routes |
 | `npm run test:consumer` | Generate pact file from consumer expectations |
 | `npm run test:provider` | Verify pact against real provider |
 | `npm run start:provider` | Start provider service locally |
@@ -175,6 +184,10 @@ contract-testing-pact/
 | `npm run typecheck` | TypeScript check |
 
 ---
+
+## Tech stack
+
+Pact JS 17 (PactV4) · TypeScript 6.0 · Vitest 5 · Express 5 · Node.js 24 LTS · ESLint 10 (flat config) · GitHub Actions
 
 ## License
 
