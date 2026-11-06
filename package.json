@@ -51,7 +51,7 @@
     "@pact-foundation/pact": "^17.1.4",
     "@types/express": "^5.0.3",
     "@types/node": "^24.19.2",
-    "eslint": "^10.13.0",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.13.0",
     "prettier": "^3.9.10",
